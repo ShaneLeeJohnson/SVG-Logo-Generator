@@ -1,24 +1,43 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const { Circle } = require('./lib/shapes');
+const { Circle, Square } = require('./lib/shapes');
 
 const questions = [
     {
+        type: 'list',
+        name: 'shape',
+        message: 'Please choose a shape',
+        choices: ['Circle', 'Square']
+    },
+    {
         type: 'input',
-        name: 'color',
+        name: 'shapeColor',
         message: 'Enter shape color'
+    },
+    {
+        type: 'input',
+        name: 'text',
+        message: 'Please enter up to 3 characters'
+    },
+    {
+        type: 'input',
+        name: 'textColor',
+        message: 'Please enter the text color'
     }
 ]
 
 function init() {
     inquirer.prompt(questions)
         .then((answers) => {
-            const circle = new Circle(answers.color, 'SVG', 'white', 80);
+            const ShapeClass = answers.shape === 'Circle'
+                ? Circle
+                : Square
 
-            const svg = circle.getSVG();;
+            const shape = new ShapeClass(answers.shapeColor, answers.text, answers.textColor)
+            const svg = shape.getSVG();
 
-            fs.writeFileSync('circle.svg', svg);
-            console.log('Generated circle.svg');
+            fs.writeFileSync(`${answers.shape}.svg`, svg);
+            console.log(`Generated ${answers.shape}.svg`);
         })
         .catch((err) => {
             console.error(err.message);
