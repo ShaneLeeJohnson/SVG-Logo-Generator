@@ -1,13 +1,13 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const { Circle, Square } = require('./lib/shapes');
+const { Circle, Square, Triangle } = require('./lib/shapes');
 
 const questions = [
     {
         type: 'list',
         name: 'shape',
         message: 'Please choose a shape',
-        choices: ['Circle', 'Square']
+        choices: ['Circle', 'Square', 'Triangle']
     },
     {
         type: 'input',
@@ -31,12 +31,14 @@ function init() {
         .then((answers) => {
             const ShapeClass = answers.shape === 'Circle'
                 ? Circle
-                : Square
+                : answers.shape === 'Triangle'
+                ? Triangle
+                : Square;
 
             const shape = new ShapeClass(answers.shapeColor, answers.text, answers.textColor)
             const svg = shape.getSVG();
 
-            fs.writeFileSync(`${answers.shape}.svg`, svg);
+            fs.writeFileSync(`./examples/${answers.shape}.svg`, svg);
             console.log(`Generated ${answers.shape}.svg`);
         })
         .catch((err) => {
