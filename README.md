@@ -14,6 +14,7 @@ To use this application the user will need to open their command line terminal (
 
 To see this in action check out the video below:
 
+[SVG-Logo-Generator-Demo.webm](https://github.com/ShaneLeeJohnson/SVG-Logo-Generator/assets/77424320/df051ea2-e3ec-43a4-b104-36ce29d34edb)
 
 
 ## License
